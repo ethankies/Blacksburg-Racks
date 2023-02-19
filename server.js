@@ -22,9 +22,9 @@ main().catch(console.error);
 
 async function listDatabases(client) {
 
-    const databaseList = await client.db.admin().listDatabases();
+    const databaseList = await client.db().admin().listDatabases();
     console.log("databases:")
-    databaseList.databses.array.forEach(db => {
+    databaseList.databses.forEach(db => {
         console.log(`- ${db.name}`);
     });
 
