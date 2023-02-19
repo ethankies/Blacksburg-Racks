@@ -1,0 +1,36 @@
+{
+  "name": "blacksburg-racks",
+  "version": "1.0.0",
+  "description": "View bike racks around the town of Blacksburg.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ethankies/Blacksburg-Racks.git"
+  },
+  "keywords": [
+    "bike",
+    "racks",
+    "cycling",
+    "map",
+    "Virginia",
+    "Tech",
+    "Blacksburg"
+  ],
+  "author": "Ethan Kies",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ethankies/Blacksburg-Racks/issues"
+  },
+  "homepage": "https://github.com/ethankies/Blacksburg-Racks#readme",
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "mongoose": "^6.9.2",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-leaflet": "^4.2.0"
+  }
+}
