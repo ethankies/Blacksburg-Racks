@@ -1,8 +1,8 @@
-const { MongoClient } = require('mongodb');
+const { MongoClient, ServerApiVersion  } = require('mongodb');
 async function main() {
     //constant from connection uri
     const uri = "mongodb+srv://ekies:VchsFsR41j1uQZNp@blacksburgrackscluster.0fs1kyd.mongodb.net/?retryWrites=true&w=majority"
-    const client = new MongoClient(uri);
+    const client = new MongoClient(uri, {useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
     try {
         await client.connect();
 
@@ -24,9 +24,14 @@ async function listDatabases(client) {
 
     const databaseList = await client.db().admin().listDatabases();
     console.log("databases:")
-    databaseList.databses.forEach(db => {
-        console.log(`- ${db.name}`);
-    });
+    try{
+        databaseList.databses.forEach(db => {
+            console.log(`- ${db.name}`);
+        });
+    } catch (e){
+        console.log(e);
+    }
+    
 
 }
 //mongodb+srv://ekies:<password>@blacksburgrackscluster.0fs1kyd.mongodb.net/?retryWrites=true&w=majority
