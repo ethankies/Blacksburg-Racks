@@ -1,10 +1,12 @@
 const { MongoClient } = require('mongodb');
 async function main() {
     //constant from connection uri
-    const uri = "mongodb+srv://ekies:<password>@blacksburgrackscluster.0fs1kyd.mongodb.net/?retryWrites=true&w=majority"
+    const uri = "mongodb+srv://ekies:VchsFsR41j1uQZNp@blacksburgrackscluster.0fs1kyd.mongodb.net/?retryWrites=true&w=majority"
     const client = new MongoClient(uri);
     try {
         await client.connect();
+
+        await listDatabases(client);
     } catch (e) {
 
         console.log(e);
@@ -18,6 +20,15 @@ async function main() {
 
 main().catch(console.error);
 
+async function listDatabases(client) {
+
+    const databaseList = await client.db.admin().listDatabases();
+    console.log("databases:")
+    databaseList.databses.array.forEach(db => {
+        console.log(`- ${db.name}`);
+    });
+
+}
 //mongodb+srv://ekies:<password>@blacksburgrackscluster.0fs1kyd.mongodb.net/?retryWrites=true&w=majority
 /*
 const express = require('express');
@@ -40,13 +51,7 @@ mongoose.connect(dbURI, {
   useUnifiedTopology: true
 });
 
-//Handle HTTP requests
-try {
 
-} catch (e) {
-
-    console.log(e);
-}
 app.get('https://us-east-1.aws.data.mongodb-api.com/app/data-prhca/endpoint/data/v1', (req, res) => {
     const data = { foo: 'bar', baz: 'qux' };
     res.json(data);
