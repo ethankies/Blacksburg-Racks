@@ -1,15 +1,28 @@
-const { MongoClient, ServerApiVersion  } = require('mongodb');
+const express = require('express');
+const { MongoClient } = require('mongodb');
+const app = express();
+
+// Serve the static files from the React app
+app.use(express.static('client/build'));
+
 async function main() {
     //constant from connection uri
     const uri = "mongodb+srv://ekies:VchsFsR41j1uQZNp@blacksburgrackscluster.0fs1kyd.mongodb.net/?retryWrites=true&w=majority"
-    const client = new MongoClient(uri, {useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
+
+    const client = new MongoClient(uri);
     try {
         await client.connect();
+      
 
-        await listDatabases(client);
+        // Start the server
+        const port = process.env.PORT || 5000;
+        app.listen(port, () => {
+            console.log(`Server is running on port ${port}`);
+        });
+        //await listDatabases(client);
     } catch (e) {
 
-        console.log(e);
+        console.error(e);
     } finally {
         //close the connection to my cluster
         await client.close();
@@ -21,61 +34,17 @@ async function main() {
 main().catch(console.error);
 
 async function listDatabases(client) {
-
+    // Returns a promise that will resolve to the list of databases
     const databaseList = await client.db().admin().listDatabases();
+
     console.log("databases:")
-    try{
-        databaseList.databses.forEach(db => {
+    try {
+        databaseList.databases.forEach(db => {
             console.log(`- ${db.name}`);
         });
-    } catch (e){
+    } catch (e) {
         console.log(e);
     }
-    
+
 
 }
-//mongodb+srv://ekies:<password>@blacksburgrackscluster.0fs1kyd.mongodb.net/?retryWrites=true&w=majority
-/*
-const express = require('express');
-
-//use to connect to mongodb 
-const mongoose = require('mongoose');
-const path = require('path');
-const app = express();
-require('dotenv').config();
-
-
-// Serve the static files from the React app
-app.use(express.static(path.join(__dirname, 'client/build')));
-
-const dbURI = process.env.DB_CONNECTION;
-
-mongoose.connect(dbURI, {
-  useNewUrlParser: true,
-  useCreateIndex: true,
-  useUnifiedTopology: true
-});
-
-
-app.get('https://us-east-1.aws.data.mongodb-api.com/app/data-prhca/endpoint/data/v1', (req, res) => {
-    const data = { foo: 'bar', baz: 'qux' };
-    res.json(data);
-  });
-  
-
-const connection = mongoose.connection;
-connection.once('open', () => {
-  console.log('MongoDB database connection established successfully');
-});
-
-
-//Start server
-const port = process.env.PORT || 5000;
-
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
-});
-
-
-
-*/
