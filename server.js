@@ -8,9 +8,6 @@ require('dotenv').config();
 // Serve the static files from the React app
 app.use(express.static(path.join(__dirname, 'client/build')));
 
-
-
-
 const dbURI = process.env.DB_CONNECTION;
 
 mongoose.connect(dbURI, {
