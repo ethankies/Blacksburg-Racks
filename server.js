@@ -12,14 +12,16 @@ async function main() {
     const client = new MongoClient(uri);
     try {
         await client.connect();
-      
 
+        //print all databases
+        await listDatabases(client);
+ 
         // Start the server
         const port = process.env.PORT || 5000;
         app.listen(port, () => {
             console.log(`Server is running on port ${port}`);
         });
-        //await listDatabases(client);
+        
     } catch (e) {
 
         console.error(e);
