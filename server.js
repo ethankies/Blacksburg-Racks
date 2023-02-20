@@ -1,9 +1,10 @@
 const express = require('express');
 const { MongoClient } = require('mongodb');
 const app = express();
+const path = require('path');
 
 // Serve the static files from the React app
-app.use(express.static('client/build'));
+app.use(express.static(path.join(__dirname, 'client/build')));
 
 async function main() {
     //constant from connection uri
@@ -16,6 +17,10 @@ async function main() {
         //print all databases
         await listDatabases(client);
  
+        // Handle HTTP requests
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+  });
         // Start the server
         const port = process.env.PORT || 5000;
         app.listen(port, () => {
